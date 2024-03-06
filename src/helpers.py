@@ -187,7 +187,7 @@ def train_loop(
         )
 
         # Save model
-        model_path = f"{os.path.dirname(sys.path[0])}/output/cavity_models/cavity_model_{epoch:02d}.pt"
+        model_path = f"{os.path.dirname(sys.path[0])}/output/cavity/cavity_model_{epoch:02d}.pt"
         epoch_idx_to_model_path[epoch] = model_path
         torch.save(cavity_model_net.state_dict(), model_path)
 
@@ -525,13 +525,13 @@ def ds_train_val(
     # Save results and model
     lc_results = (pearson_r_list, val_loss_list, train_loss_list, model_idx)
     with open(
-        f"{os.path.dirname(sys.path[0])}/output/ds_models/ds_model_{model_idx}/lc_results.pkl",
+        f"{os.path.dirname(sys.path[0])}/output/ds/ds_model_{model_idx}/lc_results.pkl",
         "wb",
     ) as f:
         pickle.dump(lc_results, f)
     torch.save(
         ds_model_net.state_dict(),
-        f"{os.path.dirname(sys.path[0])}/output/ds_models/ds_model_{model_idx}/model.pt",
+        f"{os.path.dirname(sys.path[0])}/output/ds/ds_model_{model_idx}/model.pt",
     )
 
 
@@ -579,7 +579,7 @@ def ds_pred(
                 model_idx = i
                 ds_model_net.load_state_dict(
                     torch.load(
-                        f"{os.path.dirname(sys.path[0])}/output/ds_models/ds_model_{model_idx}/model.pt",
+                        f"{os.path.dirname(sys.path[0])}/output/ds/ds_model_{model_idx}/model.pt",
                         map_location=torch.device(DEVICE)
                     )
                 )
