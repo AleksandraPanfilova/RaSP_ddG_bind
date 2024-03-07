@@ -187,7 +187,7 @@ def train_loop(
         )
 
         # Save model
-        model_path = f"{os.path.dirname(sys.path[0])}/output/cavity_models/cavity_model_{epoch:02d}.pt"
+        model_path = f"/content/output/cavity/cavity_model_{epoch:02d}.pt"
         epoch_idx_to_model_path[epoch] = model_path
         torch.save(cavity_model_net.state_dict(), model_path)
 
@@ -246,7 +246,7 @@ def populate_dfs_with_resenvs(ddg_data, resenv_dataset):
     # Load PDB amino acid frequencies used to approximate unfolded states
     pdb_nlfs = -np.log(
         np.load(
-            f"{os.path.dirname(sys.path[0])}/data/train/cavity/pdb_frequencies.npz"
+            f"/content/data/train/cavity/pdb_frequencies.npz"
         )["frequencies"]
     )
 
@@ -525,13 +525,13 @@ def ds_train_val(
     # Save results and model
     lc_results = (pearson_r_list, val_loss_list, train_loss_list, model_idx)
     with open(
-        f"{os.path.dirname(sys.path[0])}/output/ds_models/ds_model_{model_idx}/lc_results.pkl",
+        f"/content/output/ds/ds_model_{model_idx}/lc_results.pkl",
         "wb",
     ) as f:
         pickle.dump(lc_results, f)
     torch.save(
         ds_model_net.state_dict(),
-        f"{os.path.dirname(sys.path[0])}/output/ds_models/ds_model_{model_idx}/model.pt",
+        f"/content/output/ds/ds_model_{model_idx}/model.pt",
     )
 
 
@@ -579,7 +579,7 @@ def ds_pred(
                 model_idx = i
                 ds_model_net.load_state_dict(
                     torch.load(
-                        f"{os.path.dirname(sys.path[0])}/output/ds_models/ds_model_{model_idx}/model.pt",
+                        f"/content/output/ds/ds_model_{model_idx}/model.pt",
                         map_location=torch.device(DEVICE)
                     )
                 )
@@ -727,7 +727,7 @@ def compute_pdb_combo_corrs(df, dataset_key):
         pdbid_1 = df_pdb_1["pdbid"][0]
         chainid_1 = df_pdb_1["chainid"][0]
         seq_1 = get_seq_from_variant(df_pdb_1)
-        filename_1 = f"{os.path.dirname(sys.path[0])}/output/{dataset_key}/prism_rasp_pred_{pdbid_1}"
+        filename_1 = f"/content/output/{dataset_key}/prism_rasp_pred_{pdbid_1}"
         rasp_to_prism(
             df_pdb_1, pdbid_1, chainid_1, seq_1, filename_1, include_bfactors=True
         )
@@ -736,7 +736,7 @@ def compute_pdb_combo_corrs(df, dataset_key):
         pdbid_2 = df_pdb_2["pdbid"][0]
         chainid_2 = df_pdb_2["chainid"][0]
         seq_2 = get_seq_from_variant(df_pdb_2)
-        filename_2 = f"{os.path.dirname(sys.path[0])}/output/{dataset_key}/prism_rasp_pred_{pdbid_2}"
+        filename_2 = f"/content/output/{dataset_key}/prism_rasp_pred_{pdbid_2}"
         rasp_to_prism(
             df_pdb_2, pdbid_2, chainid_2, seq_2, filename_2, include_bfactors=True
         )
@@ -805,7 +805,7 @@ def compute_pdb_combo_corrs(df, dataset_key):
             results.append((combo[0], combo[1], pearson_r))
 
     with open(
-        f"{os.path.dirname(sys.path[0])}/output/{dataset_key}/combo_corr_results.pkl",
+        f"/content/output/{dataset_key}/combo_corr_results.pkl",
         "wb",
     ) as f:
         pickle.dump(results, f)
@@ -816,7 +816,7 @@ def bootstrap_gnomad_clinvar():
 
     # Load
     df = pd.read_csv(
-        f"{os.path.dirname(sys.path[0])}/data/test/Human/rasp_preds_alphafold_UP000005640_9606_HUMAN_v2_gnomad_clinvar.csv"
+        f"/content/data/test/Human/rasp_preds_alphafold_UP000005640_9606_HUMAN_v2_gnomad_clinvar.csv"
     )
 
     # gnomAD
