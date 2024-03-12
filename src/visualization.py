@@ -16,7 +16,7 @@ import glob
 import math
 import pickle
 
-import mpl_scatter_density
+#import mpl_scatter_density
 #import ptitprince as pt
 #import seaborn as sns
 from matplotlib.colors import LinearSegmentedColormap
