@@ -7,8 +7,8 @@ import Bio
 import Bio.PDB
 import numpy as np
 import simtk
-import simtk.openmm
-import simtk.openmm.app
+import openmm
+import openmm.app
 import simtk.unit
 from Bio.PDB.DSSP import DSSP
 
