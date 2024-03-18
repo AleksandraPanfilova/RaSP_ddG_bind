@@ -9,8 +9,8 @@ import Bio.PDB.Polypeptide
 import Bio.SeqIO
 import pdbfixer
 import simtk
-import simtk.openmm
-import simtk.openmm.app
+import openmm
+import openmm.app
 
 PDBIO = Bio.PDB.PDBIO()
 PDB_PARSER = Bio.PDB.PDBParser(PERMISSIVE=0)
