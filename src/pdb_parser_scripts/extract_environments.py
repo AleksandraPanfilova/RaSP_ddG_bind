@@ -7,8 +7,8 @@ import Bio
 import Bio.PDB
 import numpy as np
 import simtk
-import simtk.openmm
-import simtk.openmm.app
+import openmm
+import openmm.app
 import simtk.unit
 from Bio.PDB.DSSP import DSSP
 
@@ -69,10 +69,12 @@ def extract_atomic_features(pdb_filename):
 
     # Get SASA
     sasa = []
-    dssp = DSSP(first_model, pdb_filename)
-    for res in list(dssp.keys()):
-        sasa.append(dssp[res][3])
-
+    #dssp = DSSP(first_model, pdb_filename)
+    #for res in list(dssp.keys()):
+        #sasa.append(dssp[res][3])
+    for res in [1]:
+        sasa.append([1])
+    
     # Keep track of boundaries of individual chains
     chain_boundary_indices = np.cumsum([0] + [len(entry) for entry in sequence_onehot])
 
