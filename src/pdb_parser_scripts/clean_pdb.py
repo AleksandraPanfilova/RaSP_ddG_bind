@@ -8,7 +8,6 @@ import Bio.PDB
 import Bio.PDB.Polypeptide
 import Bio.SeqIO
 import pdbfixer
-import simtk
 import openmm
 import openmm.app
 
@@ -50,17 +49,7 @@ def _step_1_reduce(
     temp1,
 ):
     # Add hydrogens using reduce program
-    command = [
-        reduce_executable,
-        "-BUILD",
-        "-DB",
-        os.path.join(
-            os.path.dirname(os.path.dirname(reduce_executable)),
-            "reduce_wwPDB_het_dict.txt",
-        ),
-        "-Quiet",
-        pdb_input_filename,
-    ]
+    command = [reduce_executable,"-BUILD", "-DB", os.path.join(os.path.dirname(os.path.dirname(reduce_executable)), "reduce_wwPDB_het_dict.txt", ), "-Quiet", pdb_input_filename, ]
     error_code = subprocess.Popen(command, stdout=temp1).wait()
     temp1.flush()
     first_model = PDB_PARSER.get_structure(pdbid, temp1.name)[0]
@@ -89,7 +78,7 @@ def _step_3_pdbfixer(first_model, temp3):
 
 
 def _step_4_fix_numbering(fixer, temp3, temp4):
-    simtk.openmm.app.PDBFile.writeFile(
+    openmm.app.PDBFile.writeFile(
         fixer.topology, fixer.positions, temp4, keepIds=False
     )
     temp4.flush()
