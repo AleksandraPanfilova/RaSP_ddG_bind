@@ -6,10 +6,9 @@ import time
 import Bio
 import Bio.PDB
 import numpy as np
-import simtk
 import openmm
 import openmm.app
-import simtk.unit
+import openmm.unit
 from Bio.PDB.DSSP import DSSP
 
 basepath = os.path.dirname(os.path.realpath(__file__))
@@ -69,11 +68,11 @@ def extract_atomic_features(pdb_filename):
 
     # Get SASA
     sasa = []
-    #dssp = DSSP(first_model, pdb_filename)
-    #for res in list(dssp.keys()):
-        #sasa.append(dssp[res][3])
-    for res in [1]:
-        sasa.append([1])
+    dssp = DSSP(first_model, pdb_filename)
+    for res in list(dssp.keys()):
+        sasa.append(dssp[res][3])
+    #for res in [1]:
+        #sasa.append([1])
     
     # Keep track of boundaries of individual chains
     chain_boundary_indices = np.cumsum([0] + [len(entry) for entry in sequence_onehot])
@@ -86,7 +85,7 @@ def extract_atomic_features(pdb_filename):
     resids_pdb = np.array(resids_pdb)
 
     # Extract positions using OpenMM.
-    pdb_simtk = simtk.openmm.app.PDBFile(pdb_filename)
+    pdb_simtk = openmm.app.PDBFile(pdb_filename)
     positions = pdb_simtk.getPositions()
 
     # Save features in a dictionary
@@ -108,7 +107,7 @@ def extract_atomic_features(pdb_filename):
 
                 # Extract atom features
                 index = atom.index
-                position = list(positions[index].value_in_unit(simtk.unit.angstrom))
+                position = list(positions[index].value_in_unit(openmm.unit.angstrom))
                 features["atom_names"].append(atom.name)
                 features["res_indices"].append(residue.index)
                 features["x"].append(position[0])
