@@ -2,7 +2,7 @@
 
 # Settings
 counter=1
-dir=$(pwd)
+dir=/content/RaSP_ddG_bind/src
 reduce_exe=$dir/pdb_parser_scripts/reduce/reduce_src/reduce
 pdb_dir=$1
 pdbs=$pdb_dir/raw/*.pdb
