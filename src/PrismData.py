@@ -14,8 +14,10 @@ See README.md for general file format definitions.
 
 __version__ = 1.001
 
-from Bio import Seq,SeqRecord,SeqIO,pairwise2,SubsMat
-from Bio.SubsMat import MatrixInfo
+#from Bio import Seq,SeqRecord,SeqIO,pairwise2,SubsMat
+#from Bio.SubsMat import MatrixInfo
+from Bio import Seq,SeqRecord,SeqIO,pairwise2,Align
+from Bio.Align import substitution_matrices
 import numpy as np
 import pandas as pd
 import yaml,csv,copy,time
@@ -972,8 +974,9 @@ class VariantData(PrismData):
                 raise ValueError("Argument target_seq to VariantData.to_new_reference must be a single-letter amino acid string (or None)")
             n_res_target = len(target_seq)
             # Align sequences
-            # MatrixInfo supports a wildcard 'X' so use upper case. Open and extend penalty 11 and 1 is blast default
-            align = pairwise2.align.globalds(target_seq.upper(), seq.upper(), MatrixInfo.blosum62, -3, -1)
+            ## MatrixInfo supports a wildcard 'X' so use upper case. Open and extend penalty 11 and 1 is blast default
+            #align = pairwise2.align.globalds(target_seq.upper(), seq.upper(), MatrixInfo.blosum62, -3, -1)
+            align = pairwise2.align.globalds(target_seq.upper(), seq.upper(), substitution_matrices.load('BLOSUM62'), -3, -1)
             # Check for alternative alignments
             if len(align) > 1 and verbose > 0:
                 print("Found %d alignments" % (len(align)))
